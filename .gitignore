@@ -1,0 +1,10 @@
+**/target/
+**/node_modules/
+**/.angular/
+**/dist/
+**/.vscode/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
