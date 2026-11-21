@@ -1,4 +1,4 @@
-package com.loadpulse_api;
+package com.loadpulse.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,3 +1,4 @@
+name: loadpulse-api
 services:
   postgres:
     image: postgres:17
