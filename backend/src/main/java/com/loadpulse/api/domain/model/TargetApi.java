@@ -60,5 +60,9 @@ public class TargetApi {
         return createdAt;
     }
 
-
+    public void update(String name,String baseUrl,String description) {
+        this.name = name;
+        this.baseUrl = baseUrl;
+        this.description = description;
+    }
 }

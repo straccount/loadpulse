@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.loadpulse.api.application.dto.CreateTargetApiRequest;
+import com.loadpulse.api.application.dto.UpdateTargetApiRequest;
 import com.loadpulse.api.application.exception.TargetApiNotFoundException;
 import com.loadpulse.api.domain.model.TargetApi;
 import com.loadpulse.api.infrastructure.persistence.TargetApiJpaRepository;
@@ -21,9 +22,7 @@ public class TargetApiService {
 
     @Transactional
     public TargetApi create(CreateTargetApiRequest request) {
-
         TargetApi targetApi = new TargetApi(request.name(),request.baseUrl(),request.description());
-
         return repository.save(targetApi);
     }
 
@@ -35,5 +34,18 @@ public class TargetApiService {
     @Transactional(readOnly = true)
     public TargetApi findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new TargetApiNotFoundException(id));
+    }
+
+    @Transactional
+    public TargetApi update(Long id,UpdateTargetApiRequest request) {
+        TargetApi target = findById(id);
+        target.update(request.name(),request.baseUrl(),request.description());
+        return target;
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        TargetApi target = findById(id);
+        repository.delete(target);
     }
 }
