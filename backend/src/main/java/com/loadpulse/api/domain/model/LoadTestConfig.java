@@ -85,4 +85,15 @@ public class LoadTestConfig {
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
+
+    public void update(TargetApi targetApi,String name,Integer virtualUsers,Integer durationSeconds,Integer requestsPerSecond,Integer timeoutMs) {
+
+        this.targetApi = targetApi;
+        this.name = name;
+        this.virtualUsers = virtualUsers;
+        this.durationSeconds = durationSeconds;
+        this.requestsPerSecond = requestsPerSecond;
+        this.timeoutMs = timeoutMs;
+        
+    }
 }
