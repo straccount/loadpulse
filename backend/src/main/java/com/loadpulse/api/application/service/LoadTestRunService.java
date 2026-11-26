@@ -1,0 +1,37 @@
+package com.loadpulse.api.application.service;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.loadpulse.api.application.dto.LoadTestRunResponse;
+import com.loadpulse.api.application.exception.LoadTestConfigNotFoundException;
+import com.loadpulse.api.application.exception.LoadTestRunNotFoundException;
+import com.loadpulse.api.domain.model.LoadTestConfig;
+import com.loadpulse.api.domain.model.LoadTestRun;
+import com.loadpulse.api.infrastructure.persistence.LoadTestConfigJpaRepository;
+import com.loadpulse.api.infrastructure.persistence.LoadTestRunJpaRepository;
+
+@Service
+public class LoadTestRunService {
+
+    private final LoadTestRunJpaRepository runRepository;
+    private final LoadTestConfigJpaRepository configRepository;
+
+    public LoadTestRunService(LoadTestRunJpaRepository runRepository, LoadTestConfigJpaRepository configRepository) {
+        this.runRepository = runRepository;
+        this.configRepository = configRepository;
+    }
+
+    @Transactional
+    public LoadTestRunResponse create(Long configId) {
+        LoadTestConfig config = configRepository.findById(configId).orElseThrow(() -> new LoadTestConfigNotFoundException(configId));
+        LoadTestRun run = new LoadTestRun(config);
+        return LoadTestRunResponse.from(runRepository.save(run));
+    }
+
+    @Transactional(readOnly = true)
+    public LoadTestRunResponse findById(Long runId) {
+        LoadTestRun run = runRepository.findById(runId).orElseThrow(() -> new LoadTestRunNotFoundException(runId));
+        return LoadTestRunResponse.from(run);
+    }
+}
