@@ -13,7 +13,10 @@ public record LoadTestRunResponse(
     OffsetDateTime createdAt,
     OffsetDateTime startedAt,
     OffsetDateTime finishedAt,
-    String errorMessage
+    String errorMessage,
+    Long totalRequests,
+    Long successfulRequests,
+    Long failedRequests
 
 ) {
 
@@ -26,7 +29,10 @@ public record LoadTestRunResponse(
             run.getCreatedAt(),
             run.getStartedAt(),
             run.getFinishedAt(),
-            run.getErrorMessage()
+            run.getErrorMessage(),
+            run.getTotalRequests(),
+            run.getSuccessfulRequests(),
+            run.getFailedRequests()
         );
     }
 }

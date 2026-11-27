@@ -32,6 +32,19 @@ public class LoadTestRun {
     @Column(name = "error_message", length = 1000)
     private String errorMessage;
 
+    @Column(name = "total_requests", nullable = false)
+    private Long totalRequests = 0L;
+
+    @Column(name = "successful_requests", nullable = false)
+    private Long successfulRequests = 0L;
+
+    @Column(name = "failed_requests", nullable = false)
+    private Long failedRequests = 0L;
+
+    @Version
+    @Column(name = "version", nullable = false)
+    private Long version;
+
     protected LoadTestRun() {
     }
 
@@ -104,5 +117,37 @@ public class LoadTestRun {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public Long getTotalRequests() {
+        return totalRequests;
+    }
+
+    public Long getSuccessfulRequests() {
+        return successfulRequests;
+    }
+
+    public Long getFailedRequests() {
+        return failedRequests;
+    }
+
+    public void setResults(
+        long totalRequests,
+        long successfulRequests,
+        long failedRequests) {
+
+    if (totalRequests < 0
+            || successfulRequests < 0
+            || failedRequests < 0
+            || totalRequests != successfulRequests + failedRequests) {
+
+        throw new IllegalArgumentException(
+                "Invalid load test metrics"
+        );
+    }
+
+    this.totalRequests = totalRequests;
+    this.successfulRequests = successfulRequests;
+    this.failedRequests = failedRequests;
     }
 }
